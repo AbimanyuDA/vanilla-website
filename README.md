@@ -1,9 +1,21 @@
-# Vanilla Website
+# Laravel Project
 
-Project website vanilla (HTML, CSS, JavaScript).
+Project website menggunakan Laravel Framework.
 
-## Deskripsi
-Repository ini berisi project website menggunakan vanilla HTML, CSS, dan JavaScript.
+## Requirement
+- PHP >= 8.2
+- Composer
+
+## Instalasi
+```bash
+composer install
+cp .env.example .env
+php artisan key:generate
+```
 
 ## Cara Menjalankan
-Buka file `index.html` di browser Anda.
+```bash
+php artisan serve
+```
+
+Aplikasi akan berjalan di: http://localhost:8000
