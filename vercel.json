@@ -1,5 +1,19 @@
 {
-  "buildCommand": "npm install && npm run build",
-  "outputDirectory": "public/build",
-  "installCommand": "npm install"
+  "buildCommand": "npm install && npm run build && composer install",
+  "installCommand": "npm install && composer install",
+  "functions": {
+    "public/index.php": {
+      "runtime": "php-8.3"
+    }
+  },
+  "routes": [
+    {
+      "src": "/build/(.*)",
+      "dest": "/public/build/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/public/index.php"
+    }
+  ]
 }
