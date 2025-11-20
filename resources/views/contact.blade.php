@@ -34,8 +34,8 @@
                     <i class="fas fa-envelope" style="font-size: 32px; color: #41281B;"></i>
                 </div>
                 <h3 style="color: #FFFFFF; margin-bottom: 10px; font-size: 24px;">Email Us</h3>
-                <p style="color: #FFFFFF; font-size: 16px;">marketing@vanillaroyal.id</p>
-                <a href="mailto:marketing@vanillaroyal.id" class="btn btn-outline" style="margin-top: 15px;">Send Email</a>
+                <p style="color: #FFFFFF; font-size: 16px;">info@vanillaroyal.id</p>
+                <a href="mailto:info@vanillaroyal.id" class="btn btn-outline" style="margin-top: 15px;">Send Email</a>
             </div>
 
             <!-- Phone -->
@@ -76,7 +76,7 @@
             <h2 class="cta-title">Ready to Place an Order?</h2>
             <p class="cta-subtitle">Request a quote for wholesale pricing</p>
             <div class="cta-buttons">
-                <a href="mailto:marketing@vanillaroyal.id" class="btn btn-white">Request Quote</a>
+                <a href="mailto:info@vanillaroyal.id" class="btn btn-white">Request Quote</a>
                 <a href="https://wa.me/6285853669568" class="btn btn-outline-white">
                     <i class="fab fa-whatsapp"></i> WhatsApp Us
                 </a>

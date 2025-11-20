@@ -11,9 +11,7 @@
                     Committed to quality, sustainability, and excellence in every bean.
                 </p>
                 <div class="footer-social">
-                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
                     <a href="https://instagram.com/vanillaroyal.id" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
                     <a href="https://wa.me/6285853669568" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
@@ -46,11 +44,11 @@
                 <ul class="footer-contact">
                     <li>
                         <i class="fas fa-map-marker-alt"></i>
-                        <span>Jl. Export Vanilla No. 123<br>Jakarta, Indonesia</span>
+                        <span>Central Java, Indonesia</span>
                     </li>
                     <li>
                         <i class="fas fa-envelope"></i>
-                        <span>marketing@vanillaroyal.id</span>
+                        <span>info@vanillaroyal.id</span>
                     </li>
                     <li>
                         <i class="fas fa-phone"></i>

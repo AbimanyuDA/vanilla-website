@@ -3,13 +3,11 @@
     <div class="container">
         <div class="top-bar-content">
             <div class="contact-info">
-                <span><i class="fas fa-envelope"></i> marketing@vanillaroyal.id</span>
+                <span><i class="fas fa-envelope"></i> info@vanillaroyal.id</span>
                 <span><i class="fas fa-phone"></i> +62 858 5366 9568</span>
             </div>
             <div class="social-links">
-                <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
                 <a href="https://instagram.com/vanillaroyal.id" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
                 <a href="https://wa.me/6285853669568" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
             </div>
         </div>
