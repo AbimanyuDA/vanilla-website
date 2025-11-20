@@ -15,7 +15,7 @@
 <!-- About Content -->
 <section class="about-section">
     <div class="container">
-        <div class="section-header center">
+        <div class="section-header center scroll-fade-up">
             <p class="section-subtitle">Our Story</p>
             <h2 class="section-title">Premium Indonesian Vanilla Export</h2>
             <div class="section-divider"></div>
@@ -37,21 +37,21 @@
 <section class="why-choose-section">
     <div class="container">
         <div class="why-choose-grid">
-            <div class="why-card">
+            <div class="why-card scroll-fade-left">
                 <div class="why-icon">
                     <i class="fas fa-bullseye"></i>
                 </div>
                 <h3>Our Mission</h3>
                 <p>To provide premium quality Indonesian vanilla to global markets while supporting local farming communities</p>
             </div>
-            <div class="why-card">
+            <div class="why-card scroll-scale">
                 <div class="why-icon">
                     <i class="fas fa-eye"></i>
                 </div>
                 <h3>Our Vision</h3>
                 <p>To become the most trusted vanilla exporter from Indonesia, recognized for quality and sustainability</p>
             </div>
-            <div class="why-card">
+            <div class="why-card scroll-fade-right">
                 <div class="why-icon">
                     <i class="fas fa-heart"></i>
                 </div>

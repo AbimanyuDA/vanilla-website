@@ -12,9 +12,9 @@
                 </p>
                 <div class="footer-social">
                     <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://instagram.com/vanillaroyal.id" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                     <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://wa.me/6285853669568" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
 
@@ -50,11 +50,11 @@
                     </li>
                     <li>
                         <i class="fas fa-envelope"></i>
-                        <span>export@vanillaindonesia.com</span>
+                        <span>marketing@vanillaroyal.id</span>
                     </li>
                     <li>
                         <i class="fas fa-phone"></i>
-                        <span>+62 812 3456 7890</span>
+                        <span>+62 858 5366 9568</span>
                     </li>
                 </ul>
             </div>
@@ -62,7 +62,7 @@
 
         <!-- Copyright -->
         <div class="footer-bottom">
-            <p>&copy; {{ date('Y') }} Indonesian Vanilla Export. All rights reserved.</p>
+            <p>&copy; {{ date('Y') }} Indonesian Vanilla Royal. All rights reserved.</p>
         </div>
     </div>
 </footer>

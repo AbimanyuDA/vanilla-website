@@ -3,14 +3,14 @@
     <div class="container">
         <div class="top-bar-content">
             <div class="contact-info">
-                <span><i class="fas fa-envelope"></i> export@vanillaindonesia.com</span>
-                <span><i class="fas fa-phone"></i> +62 812 3456 7890</span>
+                <span><i class="fas fa-envelope"></i> marketing@vanillaroyal.id</span>
+                <span><i class="fas fa-phone"></i> +62 858 5366 9568</span>
             </div>
             <div class="social-links">
                 <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://instagram.com/vanillaroyal.id" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                 <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://wa.me/6285853669568" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
             </div>
         </div>
     </div>
@@ -40,11 +40,14 @@
                     </li>
                     <li><a href="{{ route('about') }}" class="nav-link">About Us</a></li>
                     <li><a href="{{ route('contact') }}" class="nav-link">Contact</a></li>
+                    <li class="mobile-cta-nav">
+                        <a href="{{ route('contact') }}" class="btn btn-primary">Get Quote</a>
+                    </li>
                 </ul>
             </nav>
 
-            <!-- CTA Button -->
-            <div class="header-cta">
+            <!-- CTA Button Desktop -->
+            <div class="header-cta header-cta-desktop">
                 <a href="{{ route('contact') }}" class="btn btn-primary">Get Quote</a>
             </div>
 

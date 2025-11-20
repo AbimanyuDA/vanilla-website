@@ -4,7 +4,15 @@
 
 @section('content')
 <!-- Hero Section -->
-<section class="hero-section" style="background-image: url('{{ asset('images/hero/vanilla-hero.jpg') }}');">
+<section class="hero-section">
+    <!-- Hero Background Slideshow -->
+    <div class="hero-slideshow">
+        <div class="hero-slide active" style="background-image: url('{{ asset('images/hero/Vanilla Beans (14).png') }}');"></div>
+        <div class="hero-slide" style="background-image: url('{{ asset('images/hero/Vanilla Beans (3).png') }}');"></div>
+        <div class="hero-slide" style="background-image: url('{{ asset('images/hero/Vanilla Beans (8).png') }}');"></div>
+        <div class="hero-slide" style="background-image: url('{{ asset('images/hero/Pohon Vanilla (3).jpg') }}');"></div>
+        <div class="hero-slide" style="background-image: url('{{ asset('images/hero/Buah Vanilla.png') }}');"></div>
+    </div>
     <div class="hero-overlay"></div>
     <div class="container">
         <div class="hero-content">
@@ -29,21 +37,21 @@
 <section class="features-section">
     <div class="container">
         <div class="features-grid">
-            <div class="feature-card">
+            <div class="feature-card scroll-fade-left">
                 <div class="feature-icon">
                     <i class="fas fa-certificate"></i>
                 </div>
                 <h3>Certified Quality</h3>
                 <p>International quality standards and organic certifications</p>
             </div>
-            <div class="feature-card">
+            <div class="feature-card scroll-fade-up">
                 <div class="feature-icon">
                     <i class="fas fa-leaf"></i>
                 </div>
                 <h3>Sustainable</h3>
                 <p>Ethically sourced from local Indonesian farmers</p>
             </div>
-            <div class="feature-card">
+            <div class="feature-card scroll-fade-right">
                 <div class="feature-icon">
                     <i class="fas fa-shipping-fast"></i>
                 </div>
@@ -57,7 +65,7 @@
 <!-- About Section -->
 <section class="about-section">
     <div class="container">
-        <div class="section-header center">
+        <div class="section-header center scroll-fade-up">
             <p class="section-subtitle">Our Story</p>
             <h2 class="section-title">Premium Vanilla from Indonesia</h2>
             <div class="section-divider"></div>
@@ -71,95 +79,209 @@
     </div>
 </section>
 
-<!-- Products Section - Vanilla Beans -->
-<section class="products-section" id="vanilla-beans">
+<!-- Products Section with Filter Tabs -->
+<section class="products-section" id="products">
     <div class="container-wide">
-        <div class="products-intro">
-            <div class="products-image">
-                <img src="{{ asset('images/hero/vanilla-hero-2.jpg') }}" alt="Vanilla Beans">
-            </div>
-            <div class="products-content">
-                <p class="section-subtitle">Our Premium Collection</p>
-                <h2 class="section-title">Vanilla Beans</h2>
-                <div class="section-divider"></div>
-                <p class="section-description">
-                    Premium vanilla beans sourced directly from the finest Indonesian vanilla plantations. 
-                    We offer two exceptional varieties, each with unique characteristics perfect for 
-                    different culinary applications.
-                </p>
-                <a href="{{ route('contact') }}" class="btn btn-primary">Request Quote</a>
-            </div>
+        <!-- Section Header -->
+        <div class="section-header center scroll-fade-up">
+            <p class="section-subtitle">Our Premium Collection</p>
+            <h2 class="section-title">Vanilla Products</h2>
+            <div class="section-divider"></div>
+            <p class="section-description">
+                Premium vanilla beans and derivatives sourced directly from the finest Indonesian vanilla plantations.
+            </p>
         </div>
 
-        <div class="products-grid">
-            @foreach($products as $product)
-                @if($product['category'] === 'vanilla-beans')
-                <div class="product-card">
+        <!-- Product Filter Tabs -->
+        <div class="product-filter-tabs scroll-fade-up">
+            <button class="filter-tab active" data-category="all">
+                <i class="fas fa-th"></i> All Products
+            </button>
+            <button class="filter-tab" data-category="vanilla-beans">
+                <i class="fas fa-seedling"></i> Vanilla Beans
+            </button>
+            <button class="filter-tab" data-category="planifolia">
+                <i class="fas fa-leaf"></i> Planifolia
+            </button>
+            <button class="filter-tab" data-category="tahitensis">
+                <i class="fas fa-spa"></i> Tahitensis
+            </button>
+            <button class="filter-tab" data-category="derivatives">
+                <i class="fas fa-flask"></i> Derivatives
+            </button>
+        </div>
+
+        <!-- Products Grid Wrapper -->
+        <div class="products-grid-wrapper">
+            <div class="scroll-hint product-scroll-hint-left">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+            <div class="products-grid" id="productsGrid">
+                @foreach($products as $product)
+                <div class="product-card scroll-scale" 
+                     data-category="{{ strtolower(str_replace(' ', '-', $product['name'])) }}"
+                     data-type="{{ $product['category'] }}"
+                     data-product-id="{{ $product['id'] }}">
+                    @php
+                        // Pre-parse features early for HS Code overlay
+                        $grades = [];
+                        $hsCode = null;
+                        $others = [];
+                        $specs = [];
+                        $highlightSpecs = $product['highlight_specs'] ?? [];
+                        $gradeDescriptions = $product['grade_descriptions'] ?? [];
+                        $parsedHighlights = [];
+                        foreach($product['features'] as $feature) {
+                            if(str_contains($feature, 'HS Code')) {
+                                $hsCode = $feature; // full string e.g. HS Code: 0905.10
+                            } elseif(in_array(trim($feature), ['Gourmet Grade','Grade A','Grade B','Grade C'])) {
+                                // Only treat explicit bean grade tokens as grades; avoid false positives like 'Food-Grade'
+                                $grades[] = trim($feature);
+                            } else {
+                                if(str_contains($feature, ':')) {
+                                    [$label, $value] = explode(':', $feature, 2);
+                                    $entry = [ 'label' => trim($label), 'value' => trim($value) ];
+                                    if(in_array(trim($label), $highlightSpecs)) {
+                                        $parsedHighlights[] = $entry;
+                                    } else {
+                                        $specs[] = $entry;
+                                    }
+                                } else {
+                                    $others[] = $feature;
+                                }
+                            }
+                        }
+                    @endphp
                     <div class="product-image-wrapper">
-                        <div class="product-badge">Premium</div>
-                        <img src="{{ asset($product['image']) }}" alt="{{ $product['name'] }}" class="product-image">
-                    </div>
-                    <div class="product-content">
-                        <p class="product-category">{{ $product['scientific_name'] }}</p>
-                        <h3 class="product-title">{{ $product['name'] }}</h3>
-                        <p class="product-description">{{ $product['description'] }}</p>
-                        <ul class="product-features">
-                            @foreach($product['features'] as $feature)
-                            <li><i class="fas fa-check"></i> {{ $feature }}</li>
-                            @endforeach
-                        </ul>
-                        <a href="{{ route('contact') }}" class="btn btn-outline-small">Inquiry</a>
-                    </div>
-                </div>
-                @endif
-            @endforeach
-        </div>
-    </div>
-</section>
-
-<!-- Products Section - Derivatives -->
-<section class="products-section products-section-alt" id="derivatives">
-    <div class="container-wide">
-        <div class="products-intro reverse">
-            <div class="products-content">
-                <p class="section-subtitle">Value-Added Products</p>
-                <h2 class="section-title">Vanilla Derivative Products</h2>
-                <div class="section-divider"></div>
-                <p class="section-description">
-                    High-quality vanilla derivatives processed from premium Vanilla Planifolia Andrews. 
-                    Perfect for food manufacturers, bakeries, and culinary professionals worldwide.
-                </p>
-                <a href="{{ route('contact') }}" class="btn btn-primary">Get Catalog</a>
-            </div>
-            <div class="products-image">
-                <img src="{{ asset('images/hero/vanilla-hero-3.jpg') }}" alt="Vanilla Products">
-            </div>
-        </div>
-
-        <div class="products-grid">
-            @foreach($products as $product)
-                @if($product['category'] === 'derivatives')
-                <div class="product-card">
-                    <div class="product-image-wrapper">
-                        @if($product['id'] === 5)
-                        <div class="product-badge halal">Halal Certified</div>
+                        @if($product['category'] === 'vanilla-beans')
+                            <div class="product-badge">Premium</div>
+                        @elseif($product['id'] === 5 || $product['id'] === 9)
+                            <div class="product-badge halal">Halal Certified</div>
                         @endif
-                        <img src="{{ asset($product['image']) }}" alt="{{ $product['name'] }}" class="product-image">
+                        @if($hsCode)
+                            <div class="hs-code-badge" title="Harmonized System Classification"><i class="fas fa-barcode"></i>{{ str_replace('HS Code:', '', $hsCode) }}</div>
+                        @endif
+                        
+                        @if(isset($product['images']) && count($product['images']) > 1)
+                            <div class="product-image-slideshow">
+                                @foreach($product['images'] as $index => $image)
+                                    <div class="product-image-slide {{ $index === 0 ? 'active' : '' }}">
+                                        <img src="{{ asset($image) }}" alt="{{ $product['name'] }} - Image {{ $index + 1 }}">
+                                    </div>
+                                @endforeach
+                            </div>
+                            <div class="product-image-indicators">
+                                @foreach($product['images'] as $index => $image)
+                                    <span class="product-image-indicator {{ $index === 0 ? 'active' : '' }}" data-slide="{{ $index }}"></span>
+                                @endforeach
+                            </div>
+                        @else
+                            <img src="{{ asset($product['image']) }}" alt="{{ $product['name'] }}" class="product-image">
+                        @endif
                     </div>
                     <div class="product-content">
-                        <p class="product-category">{{ $product['scientific_name'] }}</p>
+                        @if($product['category'] !== 'derivatives')
+                            <p class="product-category">{{ $product['scientific_name'] }}</p>
+                        @endif
                         <h3 class="product-title">{{ $product['name'] }}</h3>
                         <p class="product-description">{{ $product['description'] }}</p>
                         <ul class="product-features">
-                            @foreach($product['features'] as $feature)
-                            <li><i class="fas fa-check"></i> {{ $feature }}</li>
+                            @foreach($others as $other)
+                                <li><i class="fas fa-check"></i> {{ $other }}</li>
                             @endforeach
+                        </ul>
+
+                        @if(count($parsedHighlights) > 0)
+                            <div class="spec-highlights">
+                                @foreach($parsedHighlights as $hl)
+                                    <div class="spec-chip">
+                                        <span class="chip-label">{{ $hl['label'] }}</span>
+                                        <span class="chip-value">{{ $hl['value'] }}</span>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+
+                        @if(count($specs) > 0)
+                            <div class="specs-collapsible" data-collapsed="true">
+                                <button type="button" class="specs-toggle" aria-expanded="false">Details <i class="fas fa-chevron-down"></i></button>
+                                <div class="specs-body">
+                                    @foreach($specs as $spec)
+                                        @php
+                                            $isLongSpec = in_array($spec['label'], ['Condition', 'Best Use']) && strlen($spec['value']) > 80;
+                                        @endphp
+                                        <div class="product-spec-row {{ $isLongSpec ? 'spec-full-width' : '' }}">
+                                            <div class="spec-label">{{ $spec['label'] }}</div>
+                                            <div class="spec-value">{{ $spec['value'] }}</div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
+                        
+                        @if(count($grades) > 0)
+                            <div class="grades-container">
+                                @php 
+                                    $firstGrade = $grades[0] ?? null;
+                                    $firstDesc = $firstGrade ? ($gradeDescriptions[$firstGrade] ?? null) : null;
+                                    $isSimpleDescription = $firstDesc && isset($firstDesc['description']) && !isset($firstDesc['mature']);
+                                @endphp
+                                
+                                @if($isSimpleDescription)
+                                    {{-- Simple description for derivatives --}}
+                                    <span class="grades-label"><i class="fas fa-award"></i> {{ $firstGrade }}:</span>
+                                    <div class="grade-description-panel" style="display: block; margin-top: 0.5rem;">
+                                        <p style="margin: 0;">{{ $firstDesc['description'] }}</p>
+                                    </div>
+                                @else
+                                    {{-- Full grade system for vanilla beans --}}
+                                    <span class="grades-label"><i class="fas fa-award"></i> Grades:</span>
+                                    <div class="grades-list" data-product-id="{{ $product['id'] }}">
+                                        @foreach($grades as $grade)
+                                            @php $gdesc = $gradeDescriptions[$grade] ?? null; @endphp
+                                            <span class="grade-badge" data-grade-name="{{ $grade }}"
+                                                  @if($gdesc && isset($gdesc['mature']))
+                                                    data-grade-mature="{{ e($gdesc['mature']) }}"
+                                                    data-grade-usage="{{ e($gdesc['usage']) }}"
+                                                  @endif
+                                            ><i class="fas fa-star"></i> {{ $grade }}</span>
+                                        @endforeach
+                                    </div>
+                                    @if(count($gradeDescriptions) > 0)
+                                        <div class="grade-description-panel" aria-live="polite">
+                                            <div class="grade-description-placeholder">Select a grade to view its description.</div>
+                                        </div>
+                                        <div class="grade-compare" data-collapsed="true">
+                                            <button type="button" class="grade-compare-toggle" aria-expanded="false"><i class="fas fa-balance-scale"></i> Compare Grades</button>
+                                            <div class="grade-compare-body">
+                                                @foreach($gradeDescriptions as $gName => $g)
+                                                    @if(isset($g['mature']) && isset($g['usage']))
+                                                        <div class="grade-compare-row">
+                                                            <div class="grade-compare-name">{{ $gName }}</div>
+                                                            <div class="grade-compare-specs">
+                                                                <div><strong>Mature:</strong> {{ $g['mature'] }}</div>
+                                                                <div><strong>Usage:</strong> {{ $g['usage'] }}</div>
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endif
+                            </div>
+                        @endif
+                        
+                        <ul class="product-features" style="display: none;">
                         </ul>
                         <a href="{{ route('contact') }}" class="btn btn-outline-small">Inquiry</a>
                     </div>
                 </div>
-                @endif
-            @endforeach
+                @endforeach
+            </div>
+            <div class="scroll-hint product-scroll-hint-right">
+                <i class="fas fa-chevron-right"></i>
+            </div>
         </div>
     </div>
 </section>
@@ -167,7 +289,7 @@
 <!-- Why Choose Us Section -->
 <section class="why-choose-section">
     <div class="container">
-        <div class="section-header center">
+        <div class="section-header center scroll-fade-down">
             <p class="section-subtitle">Why Choose Us</p>
             <h2 class="section-title">Your Trusted Vanilla Partner</h2>
             <div class="section-divider"></div>
@@ -175,7 +297,7 @@
 
         <div class="why-choose-grid">
             @foreach($whyChooseUs as $item)
-            <div class="why-card">
+            <div class="why-card scroll-scale">
                 <div class="why-icon">
                     <i class="fas {{ $item['icon'] }}"></i>
                 </div>
@@ -188,15 +310,15 @@
 </section>
 
 <!-- CTA Section -->
-<section class="cta-section" style="background-image: url('{{ asset('images/hero/vanilla-hero.jpg') }}');">
+<section class="cta-section" style="background-image: url('{{ asset('images/hero/Pohon Vanilla (3).jpg') }}');">
     <div class="cta-overlay"></div>
     <div class="container">
-        <div class="cta-content">
+        <div class="cta-content scroll-fade-in">
             <h2 class="cta-title">Ready to Order?</h2>
             <p class="cta-subtitle">Contact us for wholesale pricing and bulk orders</p>
             <div class="cta-buttons">
                 <a href="{{ route('contact') }}" class="btn btn-white">Get in Touch</a>
-                <a href="https://wa.me/628123456789" class="btn btn-outline-white">
+                <a href="https://wa.me/6285853669568" class="btn btn-outline-white">
                     <i class="fab fa-whatsapp"></i> WhatsApp
                 </a>
             </div>
@@ -207,7 +329,7 @@
 <!-- FAQ Section -->
 <section class="faq-section">
     <div class="container">
-        <div class="section-header center">
+        <div class="section-header center scroll-fade-down">
             <p class="section-subtitle">Frequently Asked Questions</p>
             <h2 class="section-title">Common Questions About Our Vanilla</h2>
             <div class="section-divider"></div>
@@ -215,21 +337,21 @@
 
         <div class="faq-grid">
             <div class="faq-column">
-                <div class="faq-item">
+                <div class="faq-item scroll-fade-left">
                     <h4 class="faq-question">What is your minimum order quantity?</h4>
                     <p class="faq-answer">Our minimum order quantity varies by product. Please contact us for specific MOQ requirements based on your needs.</p>
                 </div>
-                <div class="faq-item">
+                <div class="faq-item scroll-fade-left">
                     <h4 class="faq-question">Do you offer organic certification?</h4>
                     <p class="faq-answer">Yes, we offer organic certified vanilla beans upon request. Please specify your certification requirements when inquiring.</p>
                 </div>
             </div>
             <div class="faq-column">
-                <div class="faq-item">
+                <div class="faq-item scroll-fade-right">
                     <h4 class="faq-question">What are your payment terms?</h4>
                     <p class="faq-answer">We accept various payment methods including T/T, L/C, and other international payment options. Terms can be discussed based on order size.</p>
                 </div>
-                <div class="faq-item">
+                <div class="faq-item scroll-fade-right">
                     <h4 class="faq-question">How long does shipping take?</h4>
                     <p class="faq-answer">Delivery time depends on your location and shipping method. Typically, it takes 7-21 business days for international shipments.</p>
                 </div>
