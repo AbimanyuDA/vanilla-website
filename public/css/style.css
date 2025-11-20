@@ -3284,3 +3284,65 @@ body.modal-open .top-bar {
         font-size: 28px !important;
     }
 }
+
+/* ============================================
+   MOBILE HORIZONTAL PRODUCT SCROLLER
+   Improves discoverability by auto-scrolling
+   and using scroll-snap on small screens.
+   ============================================ */
+@media (max-width: 768px) {
+    .products-grid-wrapper {
+        position: relative;
+    }
+    .products-grid {
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+        overflow-x: auto;
+        padding: 10px 12px 20px 6px;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none; /* Firefox */
+    }
+    .products-grid::-webkit-scrollbar { /* Chrome/Safari */
+        display: none;
+    }
+    .product-card {
+        flex: 0 0 80%;
+        min-width: 80%;
+        scroll-snap-align: start;
+    }
+    /* When centered class is applied keep flex behavior */
+    .products-grid.centered {
+        display: flex;
+    }
+    /* Hints (arrows) become visible on mobile */
+    .product-scroll-hint-left,
+    .product-scroll-hint-right {
+        display: flex;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 42px;
+        height: 42px;
+        background: rgba(255,255,255,0.85);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        color: var(--color-primary);
+        box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+        z-index: 15;
+        transition: background .3s ease, transform .3s ease;
+        cursor: pointer;
+    }
+    .product-scroll-hint-left { left: 6px; }
+    .product-scroll-hint-right { right: 6px; }
+    .product-scroll-hint-left:hover,
+    .product-scroll-hint-right:hover {
+        background: var(--color-primary);
+        color: #fff;
+        transform: translateY(-50%) scale(1.08);
+    }
+}
