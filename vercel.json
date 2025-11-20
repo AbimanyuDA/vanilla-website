@@ -1,5 +1,10 @@
 {
+  "framework": "laravel",
   "buildCommand": "npm install && npm run build",
   "installCommand": "npm install",
-  "outputDirectory": "public/build"
+  "outputDirectory": "public",
+  "env": {
+    "APP_ENV": "production",
+    "APP_DEBUG": "false"
+  }
 }
