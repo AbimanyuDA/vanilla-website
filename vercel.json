@@ -1,11 +1,5 @@
 {
-  "buildCommand": "npm install && npm run build && composer install",
-  "installCommand": "npm install && composer install",
-  "outputDirectory": "public",
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.php"
-    }
-  ]
+  "buildCommand": "npm install && npm run build",
+  "installCommand": "npm install",
+  "outputDirectory": "public/build"
 }
