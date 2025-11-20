@@ -1,7 +1,7 @@
 {
     "version": 2,
     "framework": "laravel",
-    "public": "public",
+    "public": true,
     "build": {
         "env": {
             "SKIP_ENV_VALIDATION": "1"
