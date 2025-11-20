@@ -12,7 +12,6 @@
     "installCommand": "npm ci",
     "buildCommand": "npm ci && npm run build",
     "outputDirectory": "public",
-    "nodeVersion": "20.x",
     "env": {
         "APP_ENV": "production",
         "APP_DEBUG": "false",
