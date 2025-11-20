@@ -6,51 +6,109 @@ document.addEventListener("DOMContentLoaded", function () {
     // ============================================
     const mobileToggle = document.getElementById("mobileToggle");
     const mainNav = document.getElementById("mainNav");
+    const menuOverlay = document.getElementById("menuOverlay");
     const body = document.body;
 
     if (mobileToggle && mainNav) {
-        mobileToggle.addEventListener("click", function (e) {
+        // Extra robust handlers for various mobile browsers
+        const activateMenu = (e) => {
             e.stopPropagation();
+            const willOpen = !mainNav.classList.contains("active");
             mainNav.classList.toggle("active");
-            this.classList.toggle("active");
+            mobileToggle.classList.toggle("active");
             body.classList.toggle("menu-open");
+            if (menuOverlay) {
+                if (willOpen) {
+                    menuOverlay.style.display = "block";
+                } else {
+                    menuOverlay.style.display = "none";
+                }
+            }
+            mobileToggle.setAttribute(
+                "aria-expanded",
+                mobileToggle.classList.contains("active") ? "true" : "false"
+            );
+        };
+        // Dropdown toggle untuk Products di mobile
+        const dropdowns = document.querySelectorAll('.dropdown');
+        dropdowns.forEach(dropdown => {
+            const dropdownLink = dropdown.querySelector('.nav-link');
+            if (dropdownLink) {
+                dropdownLink.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 900) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        dropdown.classList.toggle('active');
+                    }
+                });
+            }
+        });
+
+        // Overlay click closes menu
+        if (menuOverlay) {
+            menuOverlay.addEventListener("click", function () {
+                mainNav.classList.remove("active");
+                mobileToggle.classList.remove("active");
+                body.classList.remove("menu-open");
+                menuOverlay.style.display = "none";
+            });
+        }
+
+        mobileToggle.addEventListener("touchstart", activateMenu, { passive: true });
+        mobileToggle.addEventListener("pointerdown", (e) => {
+            // Avoid duplicate toggle when both pointerdown & click fire
+            if (!mobileToggle.classList.contains("_pd_handled")) {
+                mobileToggle.classList.add("_pd_handled");
+                activateMenu(e);
+                setTimeout(() => mobileToggle.classList.remove("_pd_handled"), 300);
+            }
+        });
+        mobileToggle.addEventListener("click", function (e) {
+            // If pointerdown already handled, ignore click
+            if (mobileToggle.classList.contains("_pd_handled")) return;
+            activateMenu(e);
         });
 
         // Close menu when clicking outside
         document.addEventListener("click", function (e) {
             if (
                 !mainNav.contains(e.target) &&
-                !mobileToggle.contains(e.target)
+                !mobileToggle.contains(e.target) &&
+                (!menuOverlay || !menuOverlay.contains(e.target))
             ) {
                 mainNav.classList.remove("active");
                 mobileToggle.classList.remove("active");
                 body.classList.remove("menu-open");
+                if (menuOverlay) menuOverlay.style.display = "none";
             }
         });
 
-        // Close menu when clicking on a link
-        const navLinks = mainNav.querySelectorAll(
-            ".nav-link, .mobile-cta-nav a"
+        // Close menu when clicking on a link (kecuali dropdown toggle)
+        const closeMenuLinks = mainNav.querySelectorAll(
+            ".mobile-cta-nav a, .dropdown-menu a"
         );
-        navLinks.forEach((link) => {
+        closeMenuLinks.forEach((link) => {
             link.addEventListener("click", function () {
-                if (window.innerWidth <= 768) {
+                if (window.innerWidth <= 900) {
                     mainNav.classList.remove("active");
                     mobileToggle.classList.remove("active");
                     body.classList.remove("menu-open");
+                    if (menuOverlay) menuOverlay.style.display = "none";
                 }
             });
-            // Touch fallback: some mobile browsers swallow the first tap if layout just shifted.
-            link.addEventListener("touchend", function (e) {
-                // If the link has an href (external or internal route), force navigation.
-                const href = this.getAttribute("href");
-                if (href && !href.startsWith("#")) {
-                    // Delay a tick to allow menu to close without preventing navigation.
-                    setTimeout(() => {
-                        window.location.href = href;
-                    }, 10);
+        });
+
+        // Link non-dropdown (Home, About, Contact) juga menutup menu
+        const nonDropdownLinks = mainNav.querySelectorAll('li:not(.dropdown) > .nav-link');
+        nonDropdownLinks.forEach((link) => {
+            link.addEventListener("click", function () {
+                if (window.innerWidth <= 900) {
+                    mainNav.classList.remove("active");
+                    mobileToggle.classList.remove("active");
+                    body.classList.remove("menu-open");
+                    if (menuOverlay) menuOverlay.style.display = "none";
                 }
-            }, { passive: true });
+            });
         });
         // Keyboard accessibility: close on ESC when menu open on mobile
         document.addEventListener("keydown", (ev) => {
@@ -58,6 +116,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 mainNav.classList.remove("active");
                 mobileToggle.classList.remove("active");
                 body.classList.remove("menu-open");
+                if (menuOverlay) menuOverlay.style.display = "none";
                 mobileToggle.focus();
             }
         });

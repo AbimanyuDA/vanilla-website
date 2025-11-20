@@ -25,6 +25,9 @@
                 </a>
             </div>
 
+            <!-- Overlay for mobile menu -->
+            <div class="menu-overlay" id="menuOverlay"></div>
+
             <!-- Navigation -->
             <nav class="main-nav" id="mainNav">
                 <ul class="nav-menu">
@@ -50,7 +53,7 @@
             </div>
 
             <!-- Mobile Toggle -->
-            <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation" style="min-width:48px;min-height:48px;">
                 <span></span>
                 <span></span>
                 <span></span>
