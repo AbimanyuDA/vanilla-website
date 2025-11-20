@@ -40,6 +40,26 @@ document.addEventListener("DOMContentLoaded", function () {
                     body.classList.remove("menu-open");
                 }
             });
+            // Touch fallback: some mobile browsers swallow the first tap if layout just shifted.
+            link.addEventListener("touchend", function (e) {
+                // If the link has an href (external or internal route), force navigation.
+                const href = this.getAttribute("href");
+                if (href && !href.startsWith("#")) {
+                    // Delay a tick to allow menu to close without preventing navigation.
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 10);
+                }
+            }, { passive: true });
+        });
+        // Keyboard accessibility: close on ESC when menu open on mobile
+        document.addEventListener("keydown", (ev) => {
+            if (ev.key === "Escape" && mainNav.classList.contains("active")) {
+                mainNav.classList.remove("active");
+                mobileToggle.classList.remove("active");
+                body.classList.remove("menu-open");
+                mobileToggle.focus();
+            }
         });
     }
 
