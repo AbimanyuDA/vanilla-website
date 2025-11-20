@@ -1,8 +1,5 @@
 {
-  "buildCommand": "composer install && npm install && npm run build",
-  "outputDirectory": "public",
-  "installCommand": "composer install && npm install",
-  "env": {
-    "APP_ENV": "production"
-  }
+  "buildCommand": "npm install && npm run build",
+  "outputDirectory": "public/build",
+  "installCommand": "npm install"
 }
