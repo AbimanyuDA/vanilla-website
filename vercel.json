@@ -16,7 +16,7 @@
         { "src": "/robots.txt", "dest": "/public/robots.txt" },
         { "src": "/(.*)", "dest": "/api/index.php" }
     ],
-    "buildCommand": "npm ci && npm run build && composer install --no-dev --optimize-autoloader",
+    "buildCommand": "npm ci && npm run build",
     "outputDirectory": "public",
     "env": {
         "APP_ENV": "production",
