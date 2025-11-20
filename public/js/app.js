@@ -29,21 +29,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 mobileToggle.classList.contains("active") ? "true" : "false"
             );
         };
-        // Dropdown toggle untuk Products di mobile
-        const dropdowns = document.querySelectorAll('.dropdown');
-        dropdowns.forEach(dropdown => {
-            const dropdownLink = dropdown.querySelector('.nav-link');
-            if (dropdownLink) {
-                dropdownLink.addEventListener('click', function(e) {
-                    if (window.innerWidth <= 900) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        dropdown.classList.toggle('active');
-                    }
-                });
-            }
-        });
-
         // Overlay click closes menu
         if (menuOverlay) {
             menuOverlay.addEventListener("click", function () {
@@ -83,24 +68,9 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-        // Close menu when clicking on a link (kecuali dropdown toggle)
-        const closeMenuLinks = mainNav.querySelectorAll(
-            ".mobile-cta-nav a, .dropdown-menu a"
-        );
-        closeMenuLinks.forEach((link) => {
-            link.addEventListener("click", function () {
-                if (window.innerWidth <= 900) {
-                    mainNav.classList.remove("active");
-                    mobileToggle.classList.remove("active");
-                    body.classList.remove("menu-open");
-                    if (menuOverlay) menuOverlay.style.display = "none";
-                }
-            });
-        });
-
-        // Link non-dropdown (Home, About, Contact) juga menutup menu
-        const nonDropdownLinks = mainNav.querySelectorAll('li:not(.dropdown) > .nav-link');
-        nonDropdownLinks.forEach((link) => {
+        // Close menu when clicking on any link
+        const allNavLinks = mainNav.querySelectorAll('.nav-link, .mobile-cta-nav a');
+        allNavLinks.forEach((link) => {
             link.addEventListener("click", function () {
                 if (window.innerWidth <= 900) {
                     mainNav.classList.remove("active");

@@ -30,21 +30,48 @@
 
             <!-- Navigation -->
             <nav class="main-nav" id="mainNav">
+                <!-- Mobile Menu Header dengan Logo -->
+                <div class="mobile-menu-header">
+                    <div class="mobile-logo-wrapper">
+                        <img src="{{ asset('images/logo/logo.png') }}" alt="Vanilla Royal Logo">
+                    </div>
+                </div>
+                
                 <ul class="nav-menu">
                     <li><a href="{{ route('home') }}" class="nav-link active">Home</a></li>
-                    <li class="dropdown">
-                        <a href="#products" class="nav-link">Products <i class="fas fa-chevron-down"></i></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#vanilla-beans">Vanilla Beans</a></li>
-                            <li><a href="#vanilla-derivatives">Vanilla Derivatives</a></li>
-                        </ul>
-                    </li>
+                    <li><a href="#products" class="nav-link">Products</a></li>
                     <li><a href="{{ route('about') }}" class="nav-link">About Us</a></li>
                     <li><a href="{{ route('contact') }}" class="nav-link">Contact</a></li>
                     <li class="mobile-cta-nav">
                         <a href="{{ route('contact') }}" class="btn btn-primary">Get Quote</a>
                     </li>
                 </ul>
+                
+                <!-- Mobile Menu Footer Info -->
+                <div class="mobile-menu-footer">
+                    <div class="mobile-menu-contact">
+                        <div class="mobile-menu-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>info@vanillaroyal.id</span>
+                        </div>
+                        <div class="mobile-menu-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+62 858 5366 9568</span>
+                        </div>
+                        <div class="mobile-menu-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Central Java, Indonesia</span>
+                        </div>
+                    </div>
+                    <div class="mobile-menu-social">
+                        <a href="https://instagram.com/vanillaroyal.id" target="_blank" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://wa.me/6285853669568" target="_blank" aria-label="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
             </nav>
 
             <!-- CTA Button Desktop -->
