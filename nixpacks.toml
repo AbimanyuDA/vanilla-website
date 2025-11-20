@@ -1,5 +1,0 @@
-[build]
-buildpacks = ["php", "nodejs", "composer"]
-
-[build.env]
-CI = "true"
