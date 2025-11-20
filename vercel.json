@@ -2,6 +2,21 @@
   "buildCommand": "npm install && npm run build",
   "installCommand": "npm install",
   "outputDirectory": "public",
+  "functions": {
+    "api/index.php": {
+      "runtime": "php-8.2"
+    }
+  },
+  "routes": [
+    {
+      "src": "/build/(.*)",
+      "dest": "/build/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/api/index.php"
+    }
+  ],
   "env": {
     "APP_ENV": "production",
     "APP_DEBUG": "false"
